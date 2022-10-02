@@ -12,21 +12,19 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 import os
-from dotenv import load_dotenv  # pip install python-dotenv
 
-load_dotenv()
+
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("MYSECRETKEY")
+app.config['SECRET_KEY'] = os.environ.get("MYSECRETKEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
-print(os.getenv("MYSECRETKEY"))
 
 Base = declarative_base()
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
